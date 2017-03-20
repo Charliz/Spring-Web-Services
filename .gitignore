@@ -25,6 +25,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-/.idea/
 
 
+src/main/resources/static/
+src/main/resources/templates/
