@@ -44,6 +44,20 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.sample.ejb</groupId>
+			<artifactId>webstore-remote-ejb</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.wildfly</groupId>
+			<artifactId>wildfly-ejb-client-bom</artifactId>
+			<version>10.1.0.Final</version>
+			<type>pom</type>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
