@@ -1,12 +1,13 @@
 package com.ncproject;
 
 import com.ncproject.controller.RemoteEJBClient;
-import com.ncproject.repository.ProductStubService;
-import com.ncproject.repository.ProductStubServiceImpl;
 import com.ncproject.webstore.ejb.ProductBeanInterface;
 import com.ncproject.webstore.ejb.beans.ProductBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import javax.naming.NamingException;
 
@@ -21,15 +22,6 @@ public class AppConfig {
 
         // Add any necessary implementation
         return RemoteEJBClient.getBeanInterface(new ProductBean());
-
-
-    }
-
-    @Bean
-    public ProductStubService stubService2 () throws NamingException {
-
-        // Add any necessary implementation
-        return new ProductStubServiceImpl();
 
 
     }
