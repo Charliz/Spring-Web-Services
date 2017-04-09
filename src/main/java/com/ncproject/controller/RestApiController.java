@@ -3,6 +3,12 @@ package com.ncproject.controller;
 import com.ncproject.utils.CustomError;
 import com.ncproject.webstore.ejb.ProductBeanInterface;
 import com.ncproject.webstore.entity.Product;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,7 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Date;
 import java.util.List;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Created by Champion on 20.03.2017.
@@ -41,6 +52,32 @@ public class RestApiController {
             return new ResponseEntity(new CustomError("Product with id " + id
                     + " not found"), HttpStatus.NOT_FOUND);
         }
+
+        //loging
+        TransportClient client = null;
+        try {
+            client = new PreBuiltTransportClient(Settings.EMPTY)
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            IndexResponse response = client.prepareIndex("my_base", "my_table")
+                    .setSource(jsonBuilder()
+                            .startObject()
+                            .field("productName", product.getProductName())
+                            .field("productId", product.getProd_id())
+                            .field("date", new Date())
+                            .endObject()
+                    )
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        client.close();
+
+
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
