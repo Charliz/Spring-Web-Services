@@ -1,0 +1,39 @@
+<!--View all products-->
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><span class="lead">List of Products </span></div>
+    <div class="panel-body">
+        <div>
+            <button class="btn btn-primary" ng-click="showAll()">Refresh</button>
+            <button class="btn btn-primary" ng-click="editOrCreate()">Add New</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th width="100"></th>
+                    <th width="100"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="product in products">
+                    <td>{{product.brand}}</td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+
+                    <td><button class="btn btn-success custom-width" ng-click="editOrCreate(product)">Edit</button></td>
+                    <td><button class="btn btn-danger custom-width" ng-click="delete(product)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

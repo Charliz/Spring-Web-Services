@@ -1,0 +1,63 @@
+<div class="panel-heading"><span class="lead">Product</span></div>
+<div class="panel-body">
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-2 control-lable" for="brand">Brand</label>
+                <div class="col-md-7">
+                    <input type="text" ng-model="currentProduct.brand" id="brand" class="brand form-control input-sm"
+                           placeholder="brand" required ng-minlength="3"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-2 control-lable" for="productName">Product Name</label>
+                <div class="col-md-7">
+                    <input type="text" ng-model="currentProduct.productName" id="productName" class="form-control input-sm"
+                           placeholder="Product Name" required ng-minlength="3"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-2 control-lable" for="description">Description</label>
+                <div class="col-md-7">
+                    <input type="text" ng-model="currentProduct.description" id="description" class="form-control input-sm"
+                           placeholder="Enter description" required ng-minlength="3"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-2 control-lable" for="price">Price</label>
+                <div class="col-md-7">
+                    <input type="text" ng-model="currentProduct.price" id="price" class="form-control input-sm"
+                           placeholder="Enter price" required ng-pattern="ProductsCtrl.onlyNumbers"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-2 control-lable" for="quantity">Quantity</label>
+                <div class="col-md-7">
+                    <input type="text" ng-model="currentProduct.quantity" id="quantity" class="form-control input-sm"
+                           placeholder="Enter quantity" required ng-pattern="ProductsCtrl.onlyIntegers"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-actions floatRight">
+                <button class="btn btn-primary" ng-click="saveEdit(currentProduct)">Save</button>
+
+                <button class="btn btn-warning btn-sm" ng-click="cancelEdit()">Cancel</button>
+
+            </div>
+        </div>
+
+</div>

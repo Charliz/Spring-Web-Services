@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="AppProducts">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Products</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script src="js/app.js"></script>
+
+
+</head>
+
+<body ng-controller="ProductsCtrl">
+<div class="panel panel-primary">
+    <h3 class="panel-heading">Best Online Store</h3>
+
+    <ng-include src="'views/product-list.html'" ng-show="currentView == 'table'"></ng-include>
+    <ng-include src="'views/add-edit-products.html'" ng-show="currentView == 'edit'"></ng-include>
+</div>
+
+</body>
+</html>

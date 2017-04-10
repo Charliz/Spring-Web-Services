@@ -34,7 +34,7 @@ public class RestApiController {
     @Autowired
     ProductBeanInterface productService;
 
-    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    @RequestMapping("/product")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         if (products.isEmpty()) {
@@ -81,7 +81,7 @@ public class RestApiController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/product/", method = RequestMethod.POST)
+    @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<?> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
 
         productService.createProduct(product);
