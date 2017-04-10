@@ -3,11 +3,11 @@ package com.ncproject.controller;
 import com.ncproject.utils.CustomError;
 import com.ncproject.webstore.ejb.ProductBeanInterface;
 import com.ncproject.webstore.entity.Product;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +36,20 @@ public class RestApiController {
     @RequestMapping("/product")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
+
+        //log
+        XContentBuilder json = null;
+        try {
+            json = jsonBuilder()
+                    .startObject()
+                    .field("productListSize", products.size())
+                    .field("date", new Date())
+                    .endObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        loging(json, "products");
+
         if (products.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
 
@@ -53,29 +66,19 @@ public class RestApiController {
                     + " not found"), HttpStatus.NOT_FOUND);
         }
 
-        //loging
-        TransportClient client = null;
+        //log
+        XContentBuilder json = null;
         try {
-            client = new PreBuiltTransportClient(Settings.EMPTY)
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+            json = jsonBuilder()
+                    .startObject()
+                    .field("productName", product.getProductName())
+                    .field("productId", product.getProd_id())
+                    .field("date", new Date())
+                    .endObject();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try {
-            IndexResponse response = client.prepareIndex("my_base", "my_table")
-                    .setSource(jsonBuilder()
-                            .startObject()
-                            .field("productName", product.getProductName())
-                            .field("productId", product.getProd_id())
-                            .field("date", new Date())
-                            .endObject()
-                    )
-                    .get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        client.close();
+        loging(json, "product");
 
 
         return new ResponseEntity<>(product, HttpStatus.OK);
@@ -123,7 +126,23 @@ public class RestApiController {
         return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
     }
 
+    //loging
+    public void loging(XContentBuilder json, String type){
+        TransportClient client = null;
+        try {
+            client = new PreBuiltTransportClient(Settings.EMPTY)
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-
+        try {
+            IndexResponse response = client.prepareIndex("my_index", type)
+                    .setSource(json)
+                    .get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        client.close();
+    }
 }
