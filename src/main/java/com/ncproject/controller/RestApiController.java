@@ -38,17 +38,22 @@ public class RestApiController {
         List<Product> products = productService.getAllProducts();
 
         //log
-        XContentBuilder json = null;
         try {
-            json = jsonBuilder()
+            XContentBuilder json = jsonBuilder()
                     .startObject()
                     .field("productListSize", products.size())
                     .field("date", new Date())
                     .endObject();
+            Thread secondThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    loging(json, "products");
+                }
+            });
+            secondThread.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        loging(json, "products");
 
         if (products.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
