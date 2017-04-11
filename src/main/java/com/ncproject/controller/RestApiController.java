@@ -37,6 +37,7 @@ public class RestApiController {
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
 
+        /*
         //log
         XContentBuilder json = null;
         try {
@@ -48,7 +49,9 @@ public class RestApiController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         loging(json, "products");
+        */
 
         if (products.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -66,6 +69,7 @@ public class RestApiController {
                     + " not found"), HttpStatus.NOT_FOUND);
         }
 
+        /*
         //log
         XContentBuilder json = null;
         try {
@@ -79,7 +83,7 @@ public class RestApiController {
             e.printStackTrace();
         }
         loging(json, "product");
-
+        */
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -126,6 +130,8 @@ public class RestApiController {
         return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
     }
 
+
+    /*
     //loging
     public void loging(XContentBuilder json, String type){
         TransportClient client = null;
@@ -145,4 +151,5 @@ public class RestApiController {
         }
         client.close();
     }
+    */
 }

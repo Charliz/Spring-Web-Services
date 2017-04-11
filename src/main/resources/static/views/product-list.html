@@ -6,31 +6,64 @@
     <div class="panel-body">
         <div>
             <button class="btn btn-primary" ng-click="showAll()">Refresh</button>
-            <button class="btn btn-primary" ng-click="editOrCreate()">Add New</button>
+            <button class="btn btn-success" ng-click="editOrCreate()">Add New</button>
         </div>
+
+        <br>
+
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+                    <input type="text" class="form-control" placeholder="Search products" ng-model="searchProduct">
+
+                </div>
+            </div>
+        </form>
+
         <div class="table-responsive">
-            <table class="table table-hover">
+
+            <table id="myTable" class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Brand</th>
-                    <th>Product Name</th>
+                    <th>
+                        <a href="#" ng-click="sortType = 'brand'; sortReverse = !sortReverse">
+                            Brand
+                        </a></th>
+
+                    <th>
+                        <a href="#" ng-click="sortType = 'productName'; sortReverse = !sortReverse">
+                        Product Name
+                        </a></th>
+
                     <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+
+                    <th> <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse">
+                        Price
+                    </a></th>
+
+                    <th><a href="#" ng-click="sortType = 'quantity'; sortReverse = !sortReverse">
+                        Quantity
+                    </a></th>
                     <th width="100"></th>
                     <th width="100"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="product in products">
+                <tr ng-repeat="product in products | orderBy:sortType:sortReverse | filter:searchProduct">
                     <td>{{product.brand}}</td>
                     <td>{{product.productName}}</td>
                     <td>{{product.description}}</td>
                     <td>{{product.price}}</td>
                     <td>{{product.quantity}}</td>
 
-                    <td><button class="btn btn-success custom-width" ng-click="editOrCreate(product)">Edit</button></td>
-                    <td><button class="btn btn-danger custom-width" ng-click="delete(product)">Delete</button></td>
+                    <td>
+                        <button class="btn btn-success" ng-click="editOrCreate(product)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="delete(product)">Delete</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
