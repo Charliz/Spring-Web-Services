@@ -30,25 +30,34 @@
                     <th>
                         <a href="#" ng-click="sortType = 'brand'; sortReverse = !sortReverse">
                             Brand
+                            <span ng-show="sortType == 'brand' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'brand' && sortReverse" class="fa fa-caret-up"></span>
                         </a></th>
 
                     <th>
                         <a href="#" ng-click="sortType = 'productName'; sortReverse = !sortReverse">
                         Product Name
+                            <span ng-show="sortType == 'productName' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'productName' && sortReverse" class="fa fa-caret-up"></span>
                         </a></th>
 
                     <th>Description</th>
 
-                    <th> <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse">
+                    <th width="70"> <a href="#" ng-click="sortType = 'price'; sortReverse = !sortReverse">
                         Price
+                        <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
                     </a></th>
 
-                    <th><a href="#" ng-click="sortType = 'quantity'; sortReverse = !sortReverse">
+                    <th width="100"><a href="#" ng-click="sortType = 'quantity'; sortReverse = !sortReverse">
                         Quantity
+                        <span ng-show="sortType == 'quantity' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'quantity' && sortReverse" class="fa fa-caret-up"></span>
                     </a></th>
-                    <th width="100"></th>
-                    <th width="100"></th>
+                    <th width="80"></th>
+                    <th width="80"></th>
                 </tr>
+
                 </thead>
                 <tbody>
                 <tr ng-repeat="product in products | orderBy:sortType:sortReverse | filter:searchProduct">
